@@ -36,6 +36,5 @@ class RoomView(APIView):
 
 
 def do_logout(request):
-    print(request)
     logout(request)
     return HttpResponse('Разлогинен')
