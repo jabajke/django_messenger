@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.urls import reverse
 
@@ -37,4 +37,4 @@ class RoomView(APIView):
 
 def do_logout(request):
     logout(request)
-    return HttpResponse('Разлогинен')
+    return HttpResponseRedirect(reverse('login'))
