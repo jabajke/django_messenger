@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8"/>
         <title>Chatty</title>
@@ -15,10 +15,7 @@
                         <section class="hero is-primary">
                             <div class="hero-body">
                                 <p class="title">
-                                    Chatty
-                                </p>
-                                <p class="subtitle">
-                                    A simple chat built with Django, Channels and Redis
+                                    Chat by PAULO
                                 </p>
                             </div>
                         </section>
@@ -31,7 +28,9 @@
 
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="text" placeholder="Message" id="chat-message-input">
+                                <label for="chat-message-input">
+
+                                </label><input class="input" type="text" placeholder="Message" id="chat-message-input">
                             </div>
                         </div>
 
@@ -41,14 +40,14 @@
                             </div>
                         </div>
 
-                        <small class="has-text-grey-light">Your username: {{ username }}</small>
+                        <small class="has-text-grey-light">Your username: {{ username.username }}</small>
                     </div>
                 </div>
             </div>
         </section>
 
-       {{ room_name|json_script:"json-roomname" }}
-       {{ username|json_script:"json-username" }}
+{#       {{ room_name|json_script:"json-roomname" }}#}
+{#       {{ username|json_script:"json-username" }}#}
 
         <script>
             function scrollToBottom() {

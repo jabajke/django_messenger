@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.urls import reverse
 
-from .models import RoomModel
+from .models import RoomModel, Message
 
 from rest_framework.views import APIView
 
@@ -10,29 +10,35 @@ from rest_framework.views import APIView
 class LoginView(APIView):
 
     def post(self, request):
-        print(request.user)
-        if not request.user.is_authenticated:
-            get_user_model().objects.create_user(**request.data)
         user = authenticate(username=request.data['username'], password=request.data['password'])
         if user:
             login(request, user)
+        if not request.user.is_authenticated:
+            create = get_user_model().objects.create_user(**request.data)
+            login(request, create)
         return HttpResponseRedirect(reverse('index'))
 
 
 def index(request):
-    room = request.GET.get('room')
-    return render(request, 'chat/index.html', {"room": room})
+    user = request.user
+    rooms = RoomModel.objects.all()
+    return render(request, 'chat/index.html', {"room": rooms, "user": user})
 
 
-class RoomView(APIView):
+def room(request, room_name):
+    username = request.user
+    message = Message.objects.filter(room=room_name)
+    return render(request, 'chat/room.html', {"username": username, "room_name": room_name,
+                                              "message": message})
 
-    def post(self, request):
-        username = request.data['username']
-        room = request.data['room']
-        if RoomModel.objects.filter(title=room).first():
-            return render(request, 'chat/room.html', {"username": username,
-                                                      "room": room})
-        return redirect('index')
+
+# class RoomView(APIView):
+#
+#     def post(self, request, room_name):
+#         message = Message.objects.filter(room=room_name)
+#         if RoomModel.objects.filter(title=room_name).first():
+#             return render(request, 'chat/room.html', {"room": room_name, "message": message})
+#         return redirect('index')
 
 
 def do_logout(request):
