@@ -30,7 +30,8 @@
                             <div class="control">
                                 <label for="chat-message-input">
 
-                                </label><input class="input" type="text" placeholder="Message" id="chat-message-input">
+                                </label>
+                                <input class="input" type="text" placeholder="Message" id="chat-message-input">
                             </div>
                         </div>
 
@@ -46,8 +47,8 @@
             </div>
         </section>
 
-{#       {{ room_name|json_script:"json-roomname" }}#}
-{#       {{ username|json_script:"json-username" }}#}
+       {{ room_name|json_script:"json-roomname" }}
+       {{ username.username|json_script:"json-username" }}
 
         <script>
             function scrollToBottom() {

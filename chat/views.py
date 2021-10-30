@@ -26,19 +26,12 @@ def index(request):
 
 
 def room(request, room_name):
+    print(room_name)
     username = request.user
-    message = Message.objects.filter(room=room_name)
+    message = Message.objects.filter(room=room_name)[0:25]
     return render(request, 'chat/room.html', {"username": username, "room_name": room_name,
                                               "message": message})
 
-
-# class RoomView(APIView):
-#
-#     def post(self, request, room_name):
-#         message = Message.objects.filter(room=room_name)
-#         if RoomModel.objects.filter(title=room_name).first():
-#             return render(request, 'chat/room.html', {"room": room_name, "message": message})
-#         return redirect('index')
 
 
 def do_logout(request):
