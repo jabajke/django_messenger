@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.urls import reverse
 
@@ -26,12 +26,14 @@ def index(request):
 
 
 def room(request, room_name):
-    print(room_name)
     username = request.user
     message = Message.objects.filter(room=room_name)[0:25]
     return render(request, 'chat/room.html', {"username": username, "room_name": room_name,
                                               "message": message})
 
+
+def room_redirect(request):
+    return room(request, request.GET['room_name'])
 
 
 def do_logout(request):
